@@ -6,7 +6,7 @@ use yii\helpers\Html;
 ;
 
 /* @var $this yii\web\View */
-/* @var $searchModel promocat\oauth2\models\ClientSearch */
+/* @var $searchModel NIOLAB\oauth2\models\ClientSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'oAuth2 Clients';

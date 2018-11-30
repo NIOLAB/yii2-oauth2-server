@@ -1,11 +1,11 @@
 <?php
-namespace promocat\oauth2\components\authMethods;
+namespace NIOLAB\oauth2\components\authMethods;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use League\OAuth2\Server\ResourceServer;
-use promocat\oauth2\components\repositories\AccessTokenRepository;
-use promocat\oauth2\components\web\OauthHttpException;
-use promocat\oauth2\Module;
+use NIOLAB\oauth2\components\repositories\AccessTokenRepository;
+use NIOLAB\oauth2\components\web\OauthHttpException;
+use NIOLAB\oauth2\Module;
 use Yii;
 use yii\filters\auth\AuthMethod;
 use yii\web\HttpException;

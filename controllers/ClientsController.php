@@ -1,10 +1,10 @@
 <?php
 
-namespace promocat\oauth2\controllers;
+namespace NIOLAB\oauth2\controllers;
 
 use Yii;
-use promocat\oauth2\models\Client;
-use promocat\oauth2\models\ClientSearch;
+use NIOLAB\oauth2\models\Client;
+use NIOLAB\oauth2\models\ClientSearch;
 use yii\base\Security;
 use yii\helpers\StringHelper;
 use yii\web\Controller;

@@ -5,20 +5,20 @@
  * Date: 15-5-2018
  * Time: 16:06
  */
-namespace promocat\oauth2;
+namespace NIOLAB\oauth2;
 
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Grant\AuthCodeGrant;
 use League\OAuth2\Server\Grant\ClientCredentialsGrant;
 use League\OAuth2\Server\Grant\PasswordGrant;
 use League\OAuth2\Server\Grant\RefreshTokenGrant;
-use promocat\oauth2\components\repositories\AuthCodeRepository;
-use promocat\oauth2\components\repositories\RefreshTokenRepository;
-use promocat\oauth2\components\web\ServerRequest;
-use promocat\oauth2\components\web\ServerResponse;
-use promocat\oauth2\components\repositories\AccessTokenRepository;
-use promocat\oauth2\components\repositories\ClientRepository;
-use promocat\oauth2\components\repositories\ScopeRepository;
+use NIOLAB\oauth2\components\repositories\AuthCodeRepository;
+use NIOLAB\oauth2\components\repositories\RefreshTokenRepository;
+use NIOLAB\oauth2\components\web\ServerRequest;
+use NIOLAB\oauth2\components\web\ServerResponse;
+use NIOLAB\oauth2\components\repositories\AccessTokenRepository;
+use NIOLAB\oauth2\components\repositories\ClientRepository;
+use NIOLAB\oauth2\components\repositories\ScopeRepository;
 use yii\base\Application;
 use yii\base\BootstrapInterface;
 
@@ -27,7 +27,7 @@ class Module extends \yii\base\Module {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'promocat\oauth2\controllers';
+    public $controllerNamespace = 'NIOLAB\oauth2\controllers';
 
 
     /**
