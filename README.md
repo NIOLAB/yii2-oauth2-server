@@ -25,6 +25,12 @@ You need a few things:
 
 - An encryption key (just a random string)
 
+- The migrations
+
+```bash
+php yii migrate --migrationPath=@vendor/NIOLAB/yii2-oauth2-server/migrations
+```
+
 ### Step 2
 Add it as a yii2 module:
 ```php
