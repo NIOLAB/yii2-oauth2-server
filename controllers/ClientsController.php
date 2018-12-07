@@ -29,7 +29,7 @@ class ClientsController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['superadmin'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
