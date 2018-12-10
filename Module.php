@@ -50,6 +50,30 @@ class Module extends \yii\base\Module {
      */
     public $encryptionKey;
 
+    /**
+     * @var bool Enable the Client Credentials Grant (https://oauth2.thephpleague.com/authorization-server/client-credentials-grant/)
+     */
+    public $enableClientCredentialsGrant = true;
+
+    /**
+     * @var bool Enable the Password Grant (https://oauth2.thephpleague.com/authorization-server/resource-owner-password-credentials-grant/)
+     */
+    public $enablePasswordGrant = true;
+
+    /**
+     * @var bool Enable the Authorization Code Grant (https://oauth2.thephpleague.com/authorization-server/auth-code-grant/)
+     */
+    public $enableAuthorizationCodeFlowGrant = true;
+
+    /**
+     * @var bool Enable the Implicit Grant (https://oauth2.thephpleague.com/authorization-server/implicit-grant/
+     */
+    public $enableImplicitGrant = false;
+
+
+    public $enableClientsController = true;
+
+
 //    2018-07-10: Ik krijg dit niet werkend - Harry
 //    /**
 //     * @param Application $app
@@ -82,34 +106,53 @@ class Module extends \yii\base\Module {
                 $this->encryptionKey
             );
 
+            $enableRefreshGrant = false;
+
             /* Client Credentials Grant */
-            $server->enableGrantType(
-                new ClientCredentialsGrant(),
-                new \DateInterval('PT1H')
-            );
+            if ($this->enableClientCredentialsGrant) {
+                $server->enableGrantType(
+                    new ClientCredentialsGrant(),
+                    new \DateInterval('PT1H')
+                );
+            }
+
+            /* Client Credentials Grant */
+            if ($this->enableImplicitGrant) {
+                $server->enableGrantType(
+                    new ClientCredentialsGrant(),
+                    new \DateInterval('PT1H')
+                );
+            }
 
             /* Password Grant */
-            $server->enableGrantType(new PasswordGrant(
-                $userRepository,
-                $refreshTokenRepository
-            ));
+            if ($this->enablePasswordGrant) {
+                $server->enableGrantType(new PasswordGrant(
+                    $userRepository,
+                    $refreshTokenRepository
+                ));
+                $enableRefreshGrant = true;
+            }
 
             /* Authorization Code Flow Grant */
-            $grant = new AuthCodeGrant(
-                $authCodeRepository,
-                $refreshTokenRepository,
-                new \DateInterval('P1M')
-            );
-            $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
-            $server->enableGrantType($grant);
-
+            if ($this->enableAuthorizationCodeFlowGrant) {
+                $grant = new AuthCodeGrant(
+                    $authCodeRepository,
+                    $refreshTokenRepository,
+                    new \DateInterval('P1M')
+                );
+                $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+                $server->enableGrantType($grant);
+                $enableRefreshGrant = true;
+            }
 
             /* Refresh Token Grant */
-            $grant = new RefreshTokenGrant(
-                $refreshTokenRepository
-            );
-            $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
-            $server->enableGrantType($grant);
+            if ($enableRefreshGrant) {
+                $grant = new RefreshTokenGrant(
+                    $refreshTokenRepository
+                );
+                $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+                $server->enableGrantType($grant);
+            }
 
             $this->set('server',$server);
         }

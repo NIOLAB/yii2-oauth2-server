@@ -2,6 +2,7 @@
 
 namespace NIOLAB\oauth2\controllers;
 
+use NIOLAB\oauth2\Module;
 use Yii;
 use NIOLAB\oauth2\models\Client;
 use NIOLAB\oauth2\models\ClientSearch;
@@ -40,6 +41,20 @@ class ClientsController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function beforeAction($action) {
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+
+        /** @var Module $module */
+        $module = \Yii::$app->getModule('oauth2');
+        if (!$module->enableClientsController) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
