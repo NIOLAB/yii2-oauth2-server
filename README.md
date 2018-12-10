@@ -29,6 +29,7 @@ You need a few things:
 ```bash
 $ ssh-keygen -t rsa -b 4096 -C "yii2-app-oauth2-server"
 ```
+Make sure the file rights are 600 or 660 for the generated key files.
 
 - An encryption key (just a random string)
 
