@@ -21,14 +21,17 @@ You need a few things:
   
   And then pass the User class as the property `$userRepository` in the configuration array as below.
 
-- An SSH key pair as files
+- An SSH key pair
+```bash
+$ ssh-keygen -t rsa -b 4096 -C "yii2-app-oauth2-server"
+```
 
 - An encryption key (just a random string)
 
 - The migrations
 
 ```bash
-php yii migrate --migrationPath=@vendor/NIOLAB/yii2-oauth2-server/migrations
+$ php yii migrate --migrationPath=@vendor/NIOLAB/yii2-oauth2-server/migrations
 ```
 
 ### Step 2
