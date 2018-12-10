@@ -51,7 +51,7 @@ class ClientsController extends Controller
         /** @var Module $module */
         $module = \Yii::$app->getModule('oauth2');
         if (!$module->enableClientsController) {
-            return false;
+            throw new HttpNotFoundException();
         }
 
         return true;

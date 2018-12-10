@@ -63,7 +63,7 @@ class Module extends \yii\base\Module {
     /**
      * @var bool Enable the Authorization Code Grant (https://oauth2.thephpleague.com/authorization-server/auth-code-grant/)
      */
-    public $enableAuthorizationCodeFlowGrant = true;
+    public $enableAuthorizationCodeGrant = true;
 
     /**
      * @var bool Enable the Implicit Grant (https://oauth2.thephpleague.com/authorization-server/implicit-grant/
@@ -134,7 +134,7 @@ class Module extends \yii\base\Module {
             }
 
             /* Authorization Code Flow Grant */
-            if ($this->enableAuthorizationCodeFlowGrant) {
+            if ($this->enableAuthorizationCodeGrant) {
                 $grant = new AuthCodeGrant(
                     $authCodeRepository,
                     $refreshTokenRepository,
