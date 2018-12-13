@@ -19,6 +19,7 @@ Add this to your `composer.json`:
 You need a few things:
 
 - A UserRepository for this module to get its users from. The easiest is to take your existing `User` class, and make sure it also implements the following interfaces:
+  - `yii\web\IdentityInterface`
   - `League\OAuth2\Server\Entities\UserEntityInterface`
   - `League\OAuth2\Server\Repositories\UserRepositoryInterface`
       - Make sure to *validate* the user in `UserRepositoryInterface::getUserEntityByUserCredentials()`
