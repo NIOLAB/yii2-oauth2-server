@@ -27,6 +27,11 @@ You need a few things:
 
 - An SSH key pair. See [https://oauth2.thephpleague.com/installation/](https://oauth2.thephpleague.com/installation/)
 
+```bash
+$ openssl genrsa -out private.key 2048
+$ openssl rsa -in private.key -pubout -out public.key
+```
+
 Make sure the file rights are 600 or 660 for the generated key files.
 
 - An encryption key (just a random string)
