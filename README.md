@@ -25,10 +25,8 @@ You need a few things:
   
   And then pass the User class as the property `$userRepository` in the configuration array as below.
 
-- An SSH key pair
-```bash
-$ ssh-keygen -t rsa -b 4096 -C "yii2-app-oauth2-server"
-```
+- An SSH key pair. See [https://oauth2.thephpleague.com/installation/]()
+
 Make sure the file rights are 600 or 660 for the generated key files.
 
 - An encryption key (just a random string)
