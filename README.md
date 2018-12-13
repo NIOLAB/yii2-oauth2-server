@@ -22,6 +22,21 @@ You need a few things:
   - `League\OAuth2\Server\Entities\UserEntityInterface`
   - `League\OAuth2\Server\Repositories\UserRepositoryInterface`
       - Make sure to *validate* the user in `UserRepositoryInterface::getUserEntityByUserCredentials()`
+      
+  Also make sure to implement `findIdentityByAccessToken()`, it's used by `NIOLAB\oauth2\components\authMethods\HttpBearerAuth` to authenticate the user by access token. Example:
+  ```php
+  <?php
+      /**
+     * {@inheritdoc}
+     */
+    public static function findIdentityByAccessToken($token, $type = null) {
+        return static::find()
+            ->where(['user.status'=>static::STATUS_ACTIVE])
+            ->leftJoin('oauth_access_token', '`user`.`id` = `oauth_access_token`.`user_id`')
+            ->andWhere(['oauth_access_token.identifier' => $token])
+            ->one();
+    }
+  ```
   
   And then pass the User class as the property `$userRepository` in the configuration array as below.
 
@@ -63,3 +78,24 @@ $config = [
 ## Configuration
 There's not a lot of configuration yet. Maybe the types of grants available will be dynamic someday.
 
+
+## Access control (Guarding API calls)
+Add the `NIOLAB\oauth2\components\authMethods\HttpBearerAuth`  to your behaviors, for example:
+```php
+<?php
+ public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator'] = [
+            'class' => HttpBearerAuth::class,
+        ];
+        $behaviors['contentNegotiator'] = [
+            'class' => 'yii\filters\ContentNegotiator',
+            'formats' => [
+                'application/json' => Response::FORMAT_JSON,
+            ]
+        ];
+
+        return $behaviors;
+    }
+```
