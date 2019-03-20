@@ -1,5 +1,5 @@
 {
-  "name": "NIOLAB/yii2-oauth2-server",
+  "name": "niolab/yii2-oauth2-server",
   "description": "Oauth2 server",
   "type": "yii2-extension",
   "keywords": [
