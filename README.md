@@ -81,6 +81,12 @@ There's not a lot of configuration yet. Maybe the types of grants available will
 
 
 ## Access control (Guarding API calls)
+### Check Client Credentials
+Because the Client Credentials method creates access tokens that are not linked to a specific user, it uses a different filter to check the validity of the token.
+
+Add the `NIOLAB\oauth2\components\filters\CheckClientCredentials`  to your behaviors to validate Client Credential access keys.
+
+### Other auth flows
 Add the `NIOLAB\oauth2\components\authMethods\HttpBearerAuth`  to your behaviors, for example:
 ```php
 <?php
