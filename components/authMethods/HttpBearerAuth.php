@@ -67,7 +67,6 @@ class HttpBearerAuth extends AuthMethod {
             }
 
 
-
             return $identity;
 
         } catch (OAuthServerException $e) {
