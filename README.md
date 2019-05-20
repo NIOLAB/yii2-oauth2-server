@@ -55,7 +55,7 @@ Make sure the file rights are 600 or 660 for the generated key files.
 - The migrations
 
 ```bash
-$ php yii migrate --migrationPath=@vendor/NIOLAB/yii2-oauth2-server/migrations
+$ php yii migrate --migrationPath=@vendor/niolab/yii2-oauth2-server/migrations
 ```
 
 ### Step 2
