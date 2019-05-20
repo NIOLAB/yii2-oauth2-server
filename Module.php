@@ -119,7 +119,7 @@ class Module extends \yii\base\Module {
             /* Client Credentials Grant */
             if ($this->enableImplicitGrant) {
                 $server->enableGrantType(
-                    new ClientCredentialsGrant(),
+                    new ImplicitGrant(new \DateInterval('PT1H')),
                     new \DateInterval('PT1H')
                 );
             }
