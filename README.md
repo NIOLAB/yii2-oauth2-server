@@ -9,7 +9,7 @@ Also inspired by [https://github.com/chervand/yii2-oauth2-server](https://github
 Add this to your `composer.json`:
 ```json
 
-"NIOLAB/yii2-oauth2-server": "@dev"
+"niolab/yii2-oauth2-server": "@dev"
 
 ```
 
