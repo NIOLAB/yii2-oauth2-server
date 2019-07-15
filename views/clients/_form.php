@@ -1,6 +1,5 @@
 <?php
 
-use rmrevin\yii\fontawesome\component\Icon;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -20,9 +19,9 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'redirect_uri')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'secret',['options'=>['class'=>'has-warning form-group']])->label('<span style="color:#000">'.$model->getAttributeLabel('secret').'</span> '.(new Icon('bell')).' '.Yii::t('oauth2','Store this secret securely, it will not be shown again!'))->textInput(['readonly'=>true,'maxlength' => true]) ?>
+            <?= $form->field($model, 'secret',['options'=>['class'=>'has-warning form-group']])->label('<span style="color:#000">'.$model->getAttributeLabel('secret').'</span> '.Yii::t('oauth2','Store this secret securely, it will not be shown again!'))->textInput(['readonly'=>true,'maxlength' => true]) ?>
 
-            <?php Html::submitButton('Save', ['class' => 'btn btn-primary pull-right', 'name' => 'signup-button']) ?>
+            <?= Html::submitButton('Save', ['class' => 'btn btn-primary pull-right', 'name' => 'signup-button']) ?>
 
             <?php ActiveForm::end(); ?>
         </div>
