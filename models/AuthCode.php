@@ -112,22 +112,16 @@ class AuthCode extends ActiveRecord implements AuthCodeEntityInterface {
     }
 
     /**
-     * Get the token's expiry date time.
-     *
-     * @return \DateTime
+     * @inheritDoc
      */
     public function getExpiryDateTime() {
-        $dt = new \DateTime();
-        $dt->setTimestamp($this->expired_at);
-        return $dt;
+        return (new \DateTimeImmutable())->setTimestamp($this->expired_at);
     }
 
     /**
-     * Set the date time when the token expires.
-     *
-     * @param \DateTime $dateTime
+     * @inheritDoc
      */
-    public function setExpiryDateTime(\DateTime $dateTime) {
+    public function setExpiryDateTime(\DateTimeImmutable $dateTime) {
         $this->expired_at = $dateTime->getTimestamp();
     }
 
