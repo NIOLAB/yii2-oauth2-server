@@ -103,18 +103,17 @@ class Module extends \yii\base\Module implements BootstrapInterface {
     public function bootstrap($app)
     {
         $app->getUrlManager()
-            ->addRules((new GroupUrlRule([
-                'ruleConfig' => [
+            ->addRules([
+                [
                     'class' => UrlRule::class,
                     'pluralize' => false,
-                    'only' => ['create', 'options']
-                ],
-                'rules' => ArrayHelper::merge([
-//                    ['controller' => $this->uniqueId . '/authorize'],
-                    ['controller' => $this->uniqueId . '/token'],
-//                    ['controller' => $this->uniqueId . '/clients'],
-                ], $this->urlManagerRules)
-            ]))->rules, false);
+                    'only' => ['create', 'options'],
+                    'extraPatterns' => [
+                        'OPTIONS <action:\w+>' => 'options'
+                    ],
+                    'controller' => [$this->uniqueId . '/token']
+                ]
+            ],false);
     }
 
     /**
