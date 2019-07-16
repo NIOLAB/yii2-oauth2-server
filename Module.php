@@ -74,17 +74,6 @@ class Module extends \yii\base\Module {
     public $enableClientsController = true;
 
 
-//    2018-07-10: Ik krijg dit niet werkend - Harry
-//    /**
-//     * @param Application $app
-//     */
-//    public function bootstrap($app) {
-//        $app->urlManager->addRules([
-//            'oauth/token' => $this->uniqueId.'/token/create'
-//        ]);
-//    }
-
-
     /**
      * @return null|AuthorizationServer
      */
