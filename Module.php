@@ -19,10 +19,17 @@ use NIOLAB\oauth2\components\web\ServerResponse;
 use NIOLAB\oauth2\components\repositories\AccessTokenRepository;
 use NIOLAB\oauth2\components\repositories\ClientRepository;
 use NIOLAB\oauth2\components\repositories\ScopeRepository;
+use NIOLAB\oauth2\controllers\AuthorizeController;
+use NIOLAB\oauth2\controllers\ClientsController;
+use NIOLAB\oauth2\controllers\TokenController;
 use yii\base\Application;
 use yii\base\BootstrapInterface;
+use yii\filters\Cors;
+use yii\helpers\ArrayHelper;
+use yii\rest\UrlRule;
+use yii\web\GroupUrlRule;
 
-class Module extends \yii\base\Module {
+class Module extends \yii\base\Module implements BootstrapInterface {
 
     /**
      * {@inheritdoc}
@@ -70,12 +77,49 @@ class Module extends \yii\base\Module {
      */
     public $enableImplicitGrant = false;
 
+    public $urlManagerRules = [];
 
     public $enableClientsController = true;
 
+    public $controllerMap = [
+        'authorize' => [
+            'class' => AuthorizeController::class,
+            'as corsFilter' => Cors::class,
+        ],
+        'token' => [
+            'class' => TokenController::class,
+            'as corsFilter' => Cors::class,
+        ],
+        'clients' => [
+            'class' => ClientsController::class,
+        ]
+    ];
+
+
+    /**
+     * Sets module's URL manager rules on application's bootstrap.
+     * @param Application $app
+     */
+    public function bootstrap($app)
+    {
+        $app->getUrlManager()
+            ->addRules((new GroupUrlRule([
+                'ruleConfig' => [
+                    'class' => UrlRule::class,
+                    'pluralize' => false,
+                    'only' => ['create', 'options']
+                ],
+                'rules' => ArrayHelper::merge([
+                    ['controller' => $this->uniqueId . '/authorize'],
+                    ['controller' => $this->uniqueId . '/revoke'],
+                    ['controller' => $this->uniqueId . '/token'],
+                ], $this->urlManagerRules)
+            ]))->rules, false);
+    }
 
     /**
      * @return null|AuthorizationServer
+     * @throws \yii\base\InvalidConfigException
      */
     public function getAuthorizationServer() {
         if (!$this->has('server')) {
