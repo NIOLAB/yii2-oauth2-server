@@ -39,12 +39,9 @@ class AccessTokenRepository implements \League\OAuth2\Server\Repositories\Access
         return $token;
     }
 
+
     /**
-     * Persists a new access token to permanent storage.
-     *
-     * @param AccessTokenEntityInterface $accessTokenEntity
-     *
-     * @throws UniqueTokenIdentifierConstraintViolationException
+     * @inheritDoc
      */
     public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity) {
         if ($accessTokenEntity instanceof  AccessToken) {

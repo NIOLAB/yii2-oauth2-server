@@ -24,6 +24,7 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $redirect_uri
  * @property int $token_type
+ * @property int $is_confidential
  * @property int $grant_type
  * @property int $created_at
  * @property int $updated_at
@@ -107,6 +108,7 @@ class Client extends ActiveRecord implements ClientEntityInterface {
         return [
             'identifier' => Yii::t('oauth2','Client ID'),
             'secret' => Yii::t('oauth2','Client secret'),
+            'is_confidential' => Yii::t('oauth2','Can the client store secrets? (Confidential client)'),
         ];
     }
 
@@ -118,6 +120,7 @@ class Client extends ActiveRecord implements ClientEntityInterface {
     public function rules() {
         return [
             [['identifier','secret','name','redirect_uri'], 'required'],
+            [['is_confidential'],'boolean']
         ];
     }
 
@@ -133,8 +136,7 @@ class Client extends ActiveRecord implements ClientEntityInterface {
 
 
     /**
-     * @param callable $filter
-     * @return \yii\db\ActiveQuery
+     * @inheritdoc
      */
     public function getScopes(callable $filter)
     {
@@ -143,4 +145,11 @@ class Client extends ActiveRecord implements ClientEntityInterface {
     }
 
 
+    /**
+     * @inheritdoc
+     */
+    public function isConfidential()
+    {
+        return (bool)$this->is_confidential;
+    }
 }
