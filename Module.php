@@ -110,9 +110,9 @@ class Module extends \yii\base\Module implements BootstrapInterface {
                     'only' => ['create', 'options']
                 ],
                 'rules' => ArrayHelper::merge([
-                    ['controller' => $this->uniqueId . '/authorize'],
-                    ['controller' => $this->uniqueId . '/revoke'],
+//                    ['controller' => $this->uniqueId . '/authorize'],
                     ['controller' => $this->uniqueId . '/token'],
+//                    ['controller' => $this->uniqueId . '/clients'],
                 ], $this->urlManagerRules)
             ]))->rules, false);
     }
