@@ -19,6 +19,11 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'redirect_uri')->textInput(['maxlength' => true]) ?>
 
+            <?= $form->field($model, 'is_confidential')->dropDownList([
+                '1' => 'Ja',
+                '0' => 'Nee',
+            ]) ?>
+
             <?= $form->field($model, 'secret',['options'=>['class'=>'has-warning form-group']])->label('<span style="color:#000">'.$model->getAttributeLabel('secret').'</span> '.Yii::t('oauth2','Store this secret securely, it will not be shown again!'))->textInput(['readonly'=>true,'maxlength' => true]) ?>
 
             <?= Html::submitButton('Save', ['class' => 'btn btn-primary pull-right', 'name' => 'signup-button']) ?>

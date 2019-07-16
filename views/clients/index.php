@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
                     'identifier',
                     'name',
+                    'is_confidential',
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'template' => '{view}',
