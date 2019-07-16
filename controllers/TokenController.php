@@ -12,6 +12,8 @@ use League\OAuth2\Server\Exception\OAuthServerException;
 use NIOLAB\oauth2\components\web\OauthHttpException;
 use NIOLAB\oauth2\models\AccessToken;
 use NIOLAB\oauth2\Module;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\Cors;
 use yii\helpers\Json;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
@@ -40,6 +42,30 @@ class TokenController extends ActiveController {
             ],
         ];
     }
+
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+
+        unset($behaviors['authenticator']);
+
+        $behaviors['corsFilter'] = [
+            'class' => Cors::className(),
+            'cors' => [
+                'Origin' => ['*'],
+                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                'Access-Control-Request-Headers' => ['*'],
+                'Access-Control-Allow-Credentials' => true,
+            ],
+        ];
+
+        $behaviors['authenticator'] = [
+            'class' => CompositeAuth::className(),
+        ];
+
+        return $behaviors;
+    }
+
 
     /**
      * @return mixed
