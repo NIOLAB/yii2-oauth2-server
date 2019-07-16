@@ -47,6 +47,7 @@ class TokenController extends ActiveController {
     {
         $behaviors = parent::behaviors();
 
+        $auth = $behaviors['authenticator'];
         unset($behaviors['authenticator']);
 
         $behaviors['corsFilter'] = [
@@ -59,9 +60,10 @@ class TokenController extends ActiveController {
             ],
         ];
 
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-        ];
+        // re-add authentication filter
+        $behaviors['authenticator'] = $auth;
+        // avoid authentication on CORS-pre-flight requests (HTTP OPTIONS method)
+        $behaviors['authenticator']['except'] = ['options'];
 
         return $behaviors;
     }
