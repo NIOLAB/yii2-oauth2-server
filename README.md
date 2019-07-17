@@ -81,9 +81,7 @@ There's not a lot of configuration yet. Maybe the types of grants available will
 
 
 ## Access control (Guarding API calls)
-The `oauth2-server` can validate Access Tokens to protect an API running on the same server (or at least with access to the same database as where the acces tokens are stored, I suppose?).
 
-In cases where the API to restrict access to is a different system, you'll need to validate the access tokens in a different manner (the access tokens are JWT tokens so you could do something like this: [https://auth0.com/docs/api-auth/tutorials/verify-access-token](https://auth0.com/docs/api-auth/tutorials/verify-access-token)
 
 ### Check Client Credentials
 Because the Client Credentials method creates access tokens that are not linked to a specific user, it uses a different filter to check the validity of the token.
