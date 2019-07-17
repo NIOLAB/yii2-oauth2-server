@@ -32,6 +32,7 @@ class AccessTokenRepository implements \League\OAuth2\Server\Repositories\Access
     public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null) {
         $token = new AccessToken();
         $token->setClient($clientEntity);
+        $token->setUserIdentifier($userIdentifier);
         if (!$token->validate()) {
             throw OAuthServerException::serverError('Could not get new token: '.Json::encode($token->getErrors()));
         }
