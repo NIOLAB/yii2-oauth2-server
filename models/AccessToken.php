@@ -32,6 +32,7 @@ use yii\helpers\ArrayHelper;
  * @property int $expired_at
  * @property int $status
  *
+ * @property Scope[] relatedScopes
  */
 class AccessToken extends ActiveRecord implements AccessTokenEntityInterface {
 
@@ -39,6 +40,8 @@ class AccessToken extends ActiveRecord implements AccessTokenEntityInterface {
 
     const STATUS_ACTIVE = 1;
     const STATUS_REVOKED = -10;
+
+    protected $scopes = [];
 
     /**
      * {@inheritdoc}
@@ -51,6 +54,13 @@ class AccessToken extends ActiveRecord implements AccessTokenEntityInterface {
         return ArrayHelper::merge(parent::behaviors(),[
             TimestampBehavior::class,
         ]);
+    }
+
+    public function afterFind()
+    {
+        foreach($this->relatedScopes as $scope) {
+            $this->addScope($scope);
+        }
     }
 
     /**
@@ -146,12 +156,11 @@ class AccessToken extends ActiveRecord implements AccessTokenEntityInterface {
         return $this->hasMany(Scope::class, ['id' => 'scope_id'])->viaTable('oauth_access_token_scope', ['access_token_id' => 'id']);
     }
 
-
     /**
-     * @return ScopeEntityInterface[]|mixed
+     * @return array
      */
     public function getScopes() {
-        return $this->relatedScopes;
+        return array_keys($this->scopes);
     }
 
     /**

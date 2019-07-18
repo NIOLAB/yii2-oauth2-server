@@ -33,6 +33,9 @@ class AccessTokenRepository implements \League\OAuth2\Server\Repositories\Access
         $token = new AccessToken();
         $token->setClient($clientEntity);
         $token->setUserIdentifier($userIdentifier);
+        foreach ($scopes as $scope) {
+            $token->addScope($scope);
+        }
         if (!$token->validate()) {
             throw OAuthServerException::serverError('Could not get new token: '.Json::encode($token->getErrors()));
         }
@@ -47,19 +50,15 @@ class AccessTokenRepository implements \League\OAuth2\Server\Repositories\Access
     public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity) {
         if ($accessTokenEntity instanceof  AccessToken) {
             $accessTokenEntity->expired_at = $accessTokenEntity->getExpiryDateTime()->getTimestamp();
-
-            $accessTokenEntity->save();
-
-
             if ($accessTokenEntity->save()) {
-                foreach ($accessTokenEntity->getScopes() as $scope) {
+                $scopeIdentifiers = $accessTokenEntity->getScopes();
+                $scopes = Scope::findAll(['identifier' => $scopeIdentifiers]);
+                foreach ($scopes as $scope) {
                     if ($scope instanceof Scope) {
                         $accessTokenEntity->link('relatedScopes', $scope);
                     }
                 }
             }
-
-
         }
     }
 

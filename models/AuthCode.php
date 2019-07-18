@@ -34,14 +34,18 @@ use yii\helpers\ArrayHelper;
  * @property int $expired_at
  * @property int $status
  *
+ * @property Scope[] relatedScopes
+ * @property Client relatedClient
+ *
  */
 class AuthCode extends ActiveRecord implements AuthCodeEntityInterface {
 
     const STATUS_ACTIVE = 1;
     const STATUS_REVOKED = -10;
 
+    protected $scopes = [];
 
-    private $redirectUri;
+    protected $redirectUri;
 
     /**
      * {@inheritdoc}
@@ -56,6 +60,13 @@ class AuthCode extends ActiveRecord implements AuthCodeEntityInterface {
         ]);
     }
 
+    public function afterFind()
+    {
+        foreach($this->relatedScopes as $scope) {
+            $this->addScope($scope);
+        }
+    }
+
 
     /**
      * Associate a scope with the token.
@@ -67,16 +78,20 @@ class AuthCode extends ActiveRecord implements AuthCodeEntityInterface {
         $this->scopes[$scope->getIdentifier()] = $scope;
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
+     */
     public function getRelatedScopes() {
         return $this->hasMany(Scope::class, ['id' => 'scope_id'])->viaTable('oauth_auth_code_scope', ['auth_code_id' => 'id']);
     }
 
 
     /**
-     * @return ScopeEntityInterface[]|mixed
+     * @return array
      */
     public function getScopes() {
-        return $this->relatedScopes;
+        return array_keys($this->scopes);
     }
 
     /**

@@ -48,16 +48,15 @@ class ScopeRepository implements \League\OAuth2\Server\Repositories\ScopeReposit
                 // common and assigned to user
                 $query->andWhere(['or', ['user_id' => null], ['user_id' => $userIdentifier]]);
 //                // common and grant-specific
-//                $query->andWhere([
-//                    'or',
-//                    ['grant_type' => null],
-//                    ['grant_type' => Client::getGrantTypeId($grantType)]
-//                ]);
-
+                $query->andWhere([
+                    'or',
+                    ['grant_type' => null],
+                    ['grant_type' => Client::getGrantTypeId($grantType)]
+                ]);
             }
         );
 
-        if (empty($scopes) === false) {
+        if (!empty($scopes)) {
             $allowedScopes->andWhere(['in', 'identifier', $scopes]);
         }
 

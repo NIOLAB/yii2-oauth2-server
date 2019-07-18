@@ -14,6 +14,7 @@ use League\OAuth2\Server\Entities\ClientEntityInterface;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "oauth_client".
@@ -51,6 +52,22 @@ class Client extends ActiveRecord implements ClientEntityInterface {
     public static function tableName()
     {
         return '{{%oauth_client}}';
+    }
+
+    public static function getGrantTypeOptions()
+    {
+        return [
+            static::GRANT_TYPE_AUTHORIZATION_CODE => 'authorization_code',
+            static::GRANT_TYPE_IMPLICIT => 'implicit',
+            static::GRANT_TYPE_PASSWORD => 'password',
+            static::GRANT_TYPE_CLIENT_CREDENTIALS => 'client_credentials',
+            static::GRANT_TYPE_REFRESH_TOKEN => 'refresh_token',
+        ];
+    }
+
+    public static function getGrantTypeId($grantType, $default = null)
+    {
+        return ArrayHelper::getValue(array_flip(static::getGrantTypeOptions()), $grantType, $default);
     }
 
     /**
