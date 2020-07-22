@@ -108,3 +108,9 @@ Add the `NIOLAB\oauth2\components\authMethods\HttpBearerAuth`  to your behaviors
         return $behaviors;
     }
 ```
+
+### Usage with with `yiisoft/yii2-authclient` (or similar Authorization Code Grant clients)
+
+Create a custom client, with the following URLs:
+- authorize URL: `<domain>/authorize`
+- token URL: `<domain>/token/create`
