@@ -112,5 +112,5 @@ Add the `NIOLAB\oauth2\components\authMethods\HttpBearerAuth`  to your behaviors
 ### Usage with with `yiisoft/yii2-authclient` (or similar Authorization Code Grant clients)
 
 Create a custom client, with the following URLs:
-- authorize URL: `<domain>/authorize`
-- token URL: `<domain>/token/create`
+- authorize URL: `<domain>/oauth2/authorize`
+- token URL: `<domain>/oauth2/token/create`
