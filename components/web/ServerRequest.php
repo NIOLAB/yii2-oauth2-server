@@ -12,8 +12,6 @@
 
 namespace NIOLAB\oauth2\components\web;
 
-use Yii;
-use yii\web\HeaderCollection;
 use yii\web\Request;
 
 class ServerRequest extends \GuzzleHttp\Psr7\ServerRequest

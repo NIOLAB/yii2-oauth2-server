@@ -2,10 +2,8 @@
 
 namespace NIOLAB\oauth2\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use NIOLAB\oauth2\models\Client;
 
 /**
  * ClientSearch represents the model behind the search form of `NIOLAB\oauth2\models\Client`.

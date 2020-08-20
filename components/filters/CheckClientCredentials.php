@@ -20,7 +20,7 @@ class CheckClientCredentials extends ActionFilter {
     public function beforeAction($action)
     {
         /** @var Module $module */
-        $module = \Yii::$app->getModule('oauth2');
+        $module = Yii::$app->getModule('oauth2');
 
         $accessTokenRepository = $this->getAccessTokenRepository();
         $publicKeyPath = Yii::getAlias($module->publicKey);

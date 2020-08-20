@@ -22,6 +22,7 @@ use NIOLAB\oauth2\components\repositories\ScopeRepository;
 use NIOLAB\oauth2\controllers\AuthorizeController;
 use NIOLAB\oauth2\controllers\ClientsController;
 use NIOLAB\oauth2\controllers\TokenController;
+use Yii;
 use yii\base\Application;
 use yii\base\BootstrapInterface;
 use yii\filters\Cors;
@@ -134,7 +135,7 @@ class Module extends \yii\base\Module implements BootstrapInterface {
                 $clientRespository,
                 $accessTokenRepository,
                 $scopeRepository,
-                \Yii::getAlias($this->privateKey),
+                Yii::getAlias($this->privateKey),
                 $this->encryptionKey
             );
 
@@ -203,7 +204,7 @@ class Module extends \yii\base\Module implements BootstrapInterface {
      */
     public function getRequest() {
         if ($this->_psrRequest === null) {
-            $request = \Yii::$app->request;
+            $request = Yii::$app->request;
             $this->_psrRequest = (new ServerRequest($request))->withParsedBody($request->bodyParams)->withQueryParams($request->queryParams);
         }
         return $this->_psrRequest;

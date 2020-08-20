@@ -38,7 +38,7 @@ class HttpBearerAuth extends AuthMethod {
     public function authenticate($user, $request, $response) {
 
         /** @var Module $module */
-        $module = \Yii::$app->getModule('oauth2');
+        $module = Yii::$app->getModule('oauth2');
 //        var_dump($module);exit;
 
         $accessTokenRepository = $this->getAccessTokenRepository();
