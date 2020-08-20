@@ -38,11 +38,10 @@ class AuthCodeRepository implements \League\OAuth2\Server\Repositories\AuthCodeR
     public function persistNewAuthCode(AuthCodeEntityInterface $authCodeEntity) {
         if ($authCodeEntity instanceof AuthCode) {
             $authCodeEntity->expired_at = $authCodeEntity->getExpiryDateTime()->getTimestamp();
-
-            $authCodeEntity->save();
-
             if ($authCodeEntity->save()) {
-                foreach ($authCodeEntity->getScopes() as $scope) {
+                $scopeIdentifiers = $authCodeEntity->getScopes();
+                $scopes = Scope::findAll(['identifier' => $scopeIdentifiers]);
+                foreach ($scopes as $scope) {
                     if ($scope instanceof Scope) {
                         $authCodeEntity->link('relatedScopes', $scope);
                     }
