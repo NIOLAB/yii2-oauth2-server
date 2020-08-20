@@ -30,18 +30,6 @@ use yii\web\Response;
  */
 class AuthorizeController extends Controller {
 
-//
-//    /**
-//     * {@inheritdoc}
-//     */
-//    public function actions() {
-//        return [
-//            'options' => [
-//                'class' => 'yii\rest\OptionsAction',
-//            ],
-//        ];
-//    }
-
     /**
      * @return mixed
      * @throws HttpException

@@ -12,6 +12,8 @@ use League\OAuth2\Server\Exception\OAuthServerException;
 use NIOLAB\oauth2\components\web\OauthHttpException;
 use NIOLAB\oauth2\models\AccessToken;
 use NIOLAB\oauth2\Module;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\Cors;
 use yii\helpers\Json;
 use yii\rest\ActiveController;
 use yii\web\HttpException;

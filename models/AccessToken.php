@@ -32,6 +32,7 @@ use yii\helpers\ArrayHelper;
  * @property int $expired_at
  * @property int $status
  *
+ * @property Scope[] relatedScopes
  */
 class AccessToken extends ActiveRecord implements AccessTokenEntityInterface {
 
@@ -39,6 +40,8 @@ class AccessToken extends ActiveRecord implements AccessTokenEntityInterface {
 
     const STATUS_ACTIVE = 1;
     const STATUS_REVOKED = -10;
+
+    protected $scopes = [];
 
     /**
      * {@inheritdoc}
@@ -53,23 +56,24 @@ class AccessToken extends ActiveRecord implements AccessTokenEntityInterface {
         ]);
     }
 
-    /**
-     * Get the token's expiry date time.
-     *
-     * @return \DateTime
-     */
-    public function getExpiryDateTime() {
-        $dt = new \DateTime();
-        $dt->setTimestamp($this->expired_at);
-        return $dt;
+    public function afterFind()
+    {
+        foreach($this->relatedScopes as $scope) {
+            $this->addScope($scope);
+        }
     }
 
     /**
-     * Set the date time when the token expires.
-     *
-     * @param \DateTime $dateTime
+     * @inheritDoc
      */
-    public function setExpiryDateTime(\DateTime $dateTime) {
+    public function getExpiryDateTime() {
+        return (new \DateTimeImmutable())->setTimestamp($this->expired_at);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setExpiryDateTime(\DateTimeImmutable $dateTime) {
         $this->expired_at = $dateTime->getTimestamp();
     }
 
@@ -152,12 +156,11 @@ class AccessToken extends ActiveRecord implements AccessTokenEntityInterface {
         return $this->hasMany(Scope::class, ['id' => 'scope_id'])->viaTable('oauth_access_token_scope', ['access_token_id' => 'id']);
     }
 
-
     /**
-     * @return ScopeEntityInterface[]|mixed
+     * @return array
      */
     public function getScopes() {
-        return $this->relatedScopes;
+        return array_keys($this->scopes);
     }
 
     /**

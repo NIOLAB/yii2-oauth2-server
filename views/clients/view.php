@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'identifier',
                     'name',
                     'redirect_uri',
+                    'is_confidential',
                     'created_at',
                     'updated_at',
                 ],
