@@ -75,6 +75,12 @@ $config = [
 ];
 ?>
 ```
+Also add the module to your application **bootstrap**:
+```php
+...
+'bootstrap' => ['log','api.v1',...,'oauth2'],
+...
+```
 
 ## Configuration
 There's not a lot of configuration yet. Maybe the types of grants available will be dynamic someday.
