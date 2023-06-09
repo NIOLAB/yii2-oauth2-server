@@ -58,6 +58,12 @@ class Module extends \yii\base\Module implements BootstrapInterface {
      */
     public $encryptionKey;
 
+
+    /**
+     * @var string The period an accessToken should be valid for. Defaults to PT1H (1 hour). See DateInterval.
+     */
+    public $accessTokenTTL = 'PT1H';
+
     /**
      * @var bool Enable the Client Credentials Grant (https://oauth2.thephpleague.com/authorization-server/client-credentials-grant/)
      */
@@ -145,15 +151,15 @@ class Module extends \yii\base\Module implements BootstrapInterface {
             if ($this->enableClientCredentialsGrant) {
                 $server->enableGrantType(
                     new ClientCredentialsGrant(),
-                    new \DateInterval('PT1H')
+                    new \DateInterval($this->accessTokenTTL)
                 );
             }
 
             /* Client Credentials Grant */
             if ($this->enableImplicitGrant) {
                 $server->enableGrantType(
-                    new ImplicitGrant(new \DateInterval('PT1H')),
-                    new \DateInterval('PT1H')
+                    new ImplicitGrant(new \DateInterval($this->accessTokenTTL)),
+                    new \DateInterval($this->accessTokenTTL)
                 );
             }
 
