@@ -165,10 +165,13 @@ class Module extends \yii\base\Module implements BootstrapInterface {
 
             /* Password Grant */
             if ($this->enablePasswordGrant) {
-                $server->enableGrantType(new PasswordGrant(
-                    $userRepository,
-                    $refreshTokenRepository
-                ));
+                $server->enableGrantType(
+                    new PasswordGrant(
+                        $userRepository,
+                        $refreshTokenRepository
+                    ),
+                    new \DateInterval($this->accessTokenTTL)
+                );
                 $enableRefreshGrant = true;
             }
 
