@@ -36,7 +36,8 @@ class Scope extends ActiveRecord implements ScopeEntityInterface {
      *
      * @return string
      */
-    public function getIdentifier() {
+    public function getIdentifier(): string
+    {
         return $this->identifier;
     }
 
@@ -47,7 +48,8 @@ class Scope extends ActiveRecord implements ScopeEntityInterface {
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed
+    {
         return $this->getIdentifier();
     }
 
