@@ -12,12 +12,10 @@ use yii\base\ActionFilter;
 use yii\web\HttpException;
 
 class CheckClientCredentials extends ActionFilter {
+    private null|AccessTokenRepository $_accessTokenRepository = null;
 
 
-    private $_accessTokenRepository;
-
-
-    public function beforeAction($action)
+    public function beforeAction($action): bool
     {
         /** @var Module $module */
         $module = Yii::$app->getModule('oauth2');
@@ -31,7 +29,7 @@ class CheckClientCredentials extends ActionFilter {
                 $publicKeyPath
             );
             $request = $module->getRequest();
-            $request = $server->validateAuthenticatedRequest($request);
+            $server->validateAuthenticatedRequest($request);
         } catch (OAuthServerException $e) {
             throw new OAuthHttpException($e);
         } catch (\Exception $e) {
@@ -41,10 +39,9 @@ class CheckClientCredentials extends ActionFilter {
         return parent::beforeAction($action);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAccessTokenRepository() {
+
+    public function getAccessTokenRepository(): AccessTokenRepository
+    {
         if (!$this->_accessTokenRepository instanceof AccessTokenRepositoryInterface) {
             $this->_accessTokenRepository = new AccessTokenRepository();
         }

@@ -24,7 +24,7 @@ use yii\web\User;
 
 class HttpBearerAuth extends AuthMethod {
 
-    private $_accessTokenRepository;
+    private null|AccessTokenRepository $_accessTokenRepository = null;
 
 
     /**
@@ -33,9 +33,11 @@ class HttpBearerAuth extends AuthMethod {
      * @param Request $request
      * @param Response $response
      * @return IdentityInterface the authenticated user identity. If authentication information is not provided, null will be returned.
-     * @throws UnauthorizedHttpException if authentication information is provided but is invalid.
+     * @throws HttpException
+     * @throws OauthHttpException
      */
-    public function authenticate($user, $request, $response) {
+    public function authenticate($user, $request, $response): IdentityInterface
+    {
 
         /** @var Module $module */
         $module = Yii::$app->getModule('oauth2');
@@ -50,19 +52,19 @@ class HttpBearerAuth extends AuthMethod {
                 $publicKeyPath
             );
 
-            $request = $module->getRequest();
+            $currentRequest = $module->getRequest();
 
-            $request = $server->validateAuthenticatedRequest($request);
+            $currentRequest = $server->validateAuthenticatedRequest($currentRequest);
 
-            $tokenId = $request->getAttribute('oauth_access_token_id');
+            $tokenId = $currentRequest->getAttribute('oauth_access_token_id');
 
             /** See also \common\models\User::findIdentityByAccessToken  */
-            $identity = $user->loginByAccessToken($tokenId,get_called_class());
+            $identity = $user->loginByAccessToken($tokenId, static::class);
 
             if ($identity === null) {
                 throw OAuthServerException::accessDenied('User not found');
             }
-            if ($identity->getId() != $request->getAttribute('oauth_user_id')) {
+            if ((string)$identity->getId() !== (string)$currentRequest->getAttribute('oauth_user_id')) {
                 throw OAuthServerException::accessDenied('User ID does not match');
             }
 
@@ -80,10 +82,9 @@ class HttpBearerAuth extends AuthMethod {
 
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAccessTokenRepository() {
+
+    public function getAccessTokenRepository(): AccessTokenRepository
+    {
         if (!$this->_accessTokenRepository instanceof AccessTokenRepositoryInterface) {
             $this->_accessTokenRepository = new AccessTokenRepository();
         }

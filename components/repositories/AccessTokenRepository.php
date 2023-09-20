@@ -28,8 +28,10 @@ class AccessTokenRepository implements \League\OAuth2\Server\Repositories\Access
      * @param mixed $userIdentifier
      *
      * @return AccessTokenEntityInterface
+     * @throws OAuthServerException
      */
-    public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null) {
+    public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null): AccessTokenEntityInterface
+    {
         $token = new AccessToken();
         $token->setClient($clientEntity);
         $token->setUserIdentifier($userIdentifier);
@@ -47,7 +49,8 @@ class AccessTokenRepository implements \League\OAuth2\Server\Repositories\Access
     /**
      * @inheritDoc
      */
-    public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity) {
+    public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity): void
+    {
         if ($accessTokenEntity instanceof  AccessToken) {
             $accessTokenEntity->expired_at = $accessTokenEntity->getExpiryDateTime()->getTimestamp();
             if ($accessTokenEntity->save()) {
@@ -67,7 +70,8 @@ class AccessTokenRepository implements \League\OAuth2\Server\Repositories\Access
      *
      * @param string $tokenId
      */
-    public function revokeAccessToken($tokenId) {
+    public function revokeAccessToken($tokenId): void
+    {
         $token = AccessToken::find()->where(['identifier'=>$tokenId])->one();
         if ($token instanceof AccessToken) {
             $token->updateAttributes(['status' => AccessToken::STATUS_REVOKED]);
@@ -81,8 +85,9 @@ class AccessTokenRepository implements \League\OAuth2\Server\Repositories\Access
      *
      * @return bool Return true if this token has been revoked
      */
-    public function isAccessTokenRevoked($tokenId) {
+    public function isAccessTokenRevoked($tokenId): bool
+    {
         $token = AccessToken::find()->where(['identifier'=>$tokenId])->one();
-        return $token === null || $token->status == AccessToken::STATUS_REVOKED;
+        return $token === null || (int)$token->status === AccessToken::STATUS_REVOKED;
     }
 }
