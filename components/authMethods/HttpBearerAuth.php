@@ -72,7 +72,7 @@ class HttpBearerAuth extends AuthMethod {
             return $identity;
 
         } catch (OAuthServerException $e) {
-            throw new UnauthorizedHttpException($e);
+            throw new UnauthorizedHttpException();
         } catch (\Exception $e) {
             throw new HttpException(500, 'Unable to validate the request.', 0, YII_DEBUG ? $e : null);
         }
