@@ -44,10 +44,10 @@ You need a few things:
 - An SSH key pair. See [https://oauth2.thephpleague.com/installation/](https://oauth2.thephpleague.com/installation/)
 
 ```bash
-$ openssl genrsa -out private.key 2048
+openssl genrsa -out private.key 2048
 ```
 ```bash
-$ openssl rsa -in private.key -pubout -out public.key
+openssl rsa -in private.key -pubout -out public.key
 ```
 
 Make sure the file rights are 600 or 660 for the generated key files.
@@ -57,7 +57,7 @@ Make sure the file rights are 600 or 660 for the generated key files.
 - The migrations
 
 ```bash
-$ php yii migrate --migrationPath=@vendor/niolab/yii2-oauth2-server/migrations
+php yii migrate --migrationPath=@vendor/niolab/yii2-oauth2-server/migrations
 ```
 
 ### Step 2
